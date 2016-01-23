@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 import android.view.View;
+import com.spotify.sdk.android.player.PlayerState;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,7 @@ public class Playlist extends AppCompatActivity {
         etPlaylistTrack4 = (EditText) findViewById(R.id.etPlaylistTrack4);
         etPlaylistTrack5 = (EditText) findViewById(R.id.etPlaylistTrack5);
 
+        //if (!MainActivity.mPlayer.playing())
 
     }
 
