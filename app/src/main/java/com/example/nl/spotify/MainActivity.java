@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
                 startActivity(new Intent(this, AddSong.class));
                 break;
             case R.id.bMainOpenCon:
-                if (!mPlayer.isLoggedIn()) {
+                if (mPlayer==null) {
                     AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                             AuthenticationResponse.Type.TOKEN,
                             REDIRECT_URI);
@@ -151,9 +151,13 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
                     AuthenticationRequest request = builder.build();
                     AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
                 }
+                if (mPlayer!=null)
+                    System.out.println("mPlayer is logged in: " + mPlayer.isLoggedIn());
                 break;
             case R.id.bMainLogout:
-                mPlayer.logout();
+                if (mPlayer != null) {
+                    mPlayer.logout();
+                }
                 AuthenticationClient.clearCookies(this); // Clears password so that the client realizes the user must login again
                 Intent restart = new Intent(this, MainActivity.class); // Restarts the app so that user ends up on login page
                 startActivity(restart);
