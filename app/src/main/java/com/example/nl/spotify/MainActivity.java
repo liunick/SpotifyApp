@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Button;
 
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -30,13 +31,19 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
     public static final String REDIRECT_URI = "spotify://callback";
 
     private Player mPlayer;
+    private Button bMainAddSong, bMainOpenCon, bMainLogout;
 
     private static final int REQUEST_CODE = 1337;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Buttons added - Don't delete from Main
+        bMainAddSong = (Button) findViewById(R.id.bMainAddSong);
+        bMainOpenCon = (Button) findViewById(R.id.bMainOpenCon);
+        bMainLogout = (Button) findViewById(R.id.bMainLogout);
 
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
