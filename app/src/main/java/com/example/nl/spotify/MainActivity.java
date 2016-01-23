@@ -25,7 +25,7 @@ import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 
 public class MainActivity extends AppCompatActivity implements PlayerNotificationCallback,
-        ConnectionStateCallback{
+        ConnectionStateCallback, View.OnClickListener{
 
     public static final String CLIENT_ID = "a6bb6713adee499c94a26d64de4f7e23";
     public static final String REDIRECT_URI = "spotify://callback";
@@ -45,10 +45,12 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
         bMainOpenCon = (Button) findViewById(R.id.bMainOpenCon);
         bMainLogout = (Button) findViewById(R.id.bMainLogout);
 
+        bMainAddSong.setOnClickListener(this);
+
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
                 REDIRECT_URI);
-        builder.setScopes(new String[]{"user-read-private", "streaming"});
+        builder.setScopes(new String[]{"user-read-private", "user-library-modify", "streaming"});
         AuthenticationRequest request = builder.build();
 
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
@@ -120,5 +122,14 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
     protected void onDestroy() {
         Spotify.destroyPlayer(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.bMainAddSong:
+                startActivity(new Intent(this, AddSong.class));
+                break;
+        }
     }
 }

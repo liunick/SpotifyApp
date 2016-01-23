@@ -9,6 +9,24 @@
     tools:context="com.example.nl.spotify.AddSong"
     tools:showIn="@layout/activity_add_song">
 
+<TextView
+    android:text="Search a song:"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 
+    <EditText
+        android:id="@+id/etAddSongSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bAddSongSearch"
+        android:text="Search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/etAddSongResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
