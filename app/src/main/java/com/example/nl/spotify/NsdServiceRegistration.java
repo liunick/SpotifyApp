@@ -21,7 +21,10 @@ public class NsdServiceRegistration {
     int myLocalPort;
     private static final String TAG = "Service Registration";
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6254406f90ec75bf298554125d71f4c90feb9291
     public void registerService(int port) {
         // Create the NsdServiceInfo object, and populate it.
         NsdServiceInfo serviceInfo  = new NsdServiceInfo();
