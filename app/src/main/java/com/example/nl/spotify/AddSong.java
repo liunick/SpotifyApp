@@ -88,9 +88,9 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
     }
 
     protected void searchForTrack(String input) {
-        input = input.trim();
+        input = input.trim(); // Spotify API doesn't like whitespace
         String q = "";
-        for (int i=0;i<input.length();i++) {
+        for (int i=0;i<input.length();i++) { // Checks input and replaces all spaces with '+' so that Spotify will understand it
             if (input.substring(i, i+1) == " ") {
                 q += "+";
             } else {
