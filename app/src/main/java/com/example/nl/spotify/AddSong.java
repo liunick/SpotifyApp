@@ -18,6 +18,9 @@ import kaaes.spotify.webapi.android.models.ArtistSimple;
 import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.TracksPager;
 import kaaes.spotify.webapi.android.SpotifyService;
+
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import kaaes.spotify.webapi.android.annotations.DELETEWITHBODY;
@@ -65,8 +68,14 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
 
     Track selectedTrack;
     TracksPager searchedTracks;
-    EditText etAddSongSearch, etAddSongResult;
+    EditText etAddSongSearch, etAddSongResult1, etAddSongResult2, etAddSongResult3,
+    etAddSongResult4, etAddSongResult5;
     Button bAddSongSearch;
+    Button bAddToPlaylist;
+    Button bClearSearch;
+    int countArtist = 0;
+    List<EditText> results = new LinkedList<EditText>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +85,19 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
         setSupportActionBar(toolbar);
 
         etAddSongSearch = (EditText) findViewById(R.id.etAddSongSearch);
-        etAddSongResult = (EditText) findViewById(R.id.etAddSongResult);
+        etAddSongResult1 = (EditText) findViewById(R.id.etAddSongResult1);
+        etAddSongResult2 = (EditText) findViewById(R.id.etAddSongResult2);
+        etAddSongResult3 = (EditText) findViewById(R.id.etAddSongResult3);
+        etAddSongResult4 = (EditText) findViewById(R.id.etAddSongResult4);
+        etAddSongResult5 = (EditText) findViewById(R.id.etAddSongResult5);
+        results.add(etAddSongResult1);
+        results.add(etAddSongResult2);
+        results.add(etAddSongResult3);
+        results.add(etAddSongResult4);
+        results.add(etAddSongResult5);
         bAddSongSearch = (Button) findViewById(R.id.bAddSongSearch);
-
+        bAddToPlaylist = (Button) findViewById(R.id.bAddToPlaylist);
+        bClearSearch = (Button) findViewById(R.id.bClearSearch);
         bAddSongSearch.setOnClickListener(this);
 
     }
@@ -107,11 +126,36 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
             @Override
             public void success(TracksPager tracksPager, Response response) {
                 for (Track b : tracksPager.tracks.items) {
-                    String artists = "";
-                    for(ArtistSimple as : b.artists){
-                        artists += as.name + " ";
+                    List<ArtistSimple> artists = b.artists;
+                    String artistName = artists.get(0).name;
+                    switch (countArtist) {
+                        case 0:
+                            etAddSongResult1.setText(b.name + " - " + artistName);
+                            countArtist++;
+                            break;
+                        case 1:
+                            etAddSongResult2.setText(b.name + " - " + artistName);
+                            countArtist++;
+                            break;
+                        case 2:
+                            etAddSongResult3.setText(b.name + " - " + artistName);
+                            countArtist++;
+                            break;
+                        case 3:
+                            etAddSongResult4.setText(b.name + " - " + artistName);
+                            countArtist++;
+                            break;
+                        case 4:
+                            etAddSongResult5.setText(b.name + " - " + artistName);
+                            countArtist++;
+                            break;
+
                     }
-                    etAddSongResult.setText(b.name + " - " + artists);
+//                    List<String> artists = new LinkedList<String>();
+//                    for(ArtistSimple as : b.artists){
+//                        artists.add(as.name + " ");
+//                    }
+//                    etAddSongResult1.setText(b.name + " - " + artists);
 
                 }
                 searchedTracks = tracksPager;
