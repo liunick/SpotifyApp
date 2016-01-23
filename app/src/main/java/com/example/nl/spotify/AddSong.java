@@ -74,7 +74,6 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
     Button bAddToPlaylist;
     Button bClearSearch;
     int countArtist = 0;
-    List<EditText> results = new LinkedList<EditText>();
 
 
     @Override
@@ -90,15 +89,11 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
         etAddSongResult3 = (EditText) findViewById(R.id.etAddSongResult3);
         etAddSongResult4 = (EditText) findViewById(R.id.etAddSongResult4);
         etAddSongResult5 = (EditText) findViewById(R.id.etAddSongResult5);
-        results.add(etAddSongResult1);
-        results.add(etAddSongResult2);
-        results.add(etAddSongResult3);
-        results.add(etAddSongResult4);
-        results.add(etAddSongResult5);
         bAddSongSearch = (Button) findViewById(R.id.bAddSongSearch);
         bAddToPlaylist = (Button) findViewById(R.id.bAddToPlaylist);
         bClearSearch = (Button) findViewById(R.id.bClearSearch);
         bAddSongSearch.setOnClickListener(this);
+        bClearSearch.setOnClickListener(this);
 
     }
 
@@ -149,15 +144,9 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
                             etAddSongResult5.setText(b.name + " - " + artistName);
                             countArtist++;
                             break;
-
                     }
-//                    List<String> artists = new LinkedList<String>();
-//                    for(ArtistSimple as : b.artists){
-//                        artists.add(as.name + " ");
-//                    }
-//                    etAddSongResult1.setText(b.name + " - " + artists);
-
                 }
+                countArtist = 0;
                 searchedTracks = tracksPager;
                 Log.d("Track success", "nothing here");
             }
@@ -167,15 +156,21 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
                 Log.d("Track failure", error.toString());
             }
         });
-
     }
 
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.bAddSongSearch:
-
                 searchForTrack(etAddSongSearch.getText().toString());
+                break;
+
+            case R.id.bClearSearch:
+                etAddSongResult1.setText("");
+                etAddSongResult2.setText("");
+                etAddSongResult3.setText("");
+                etAddSongResult4.setText("");
+                etAddSongResult5.setText("");
                 break;
         }
     }
