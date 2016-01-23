@@ -19,9 +19,7 @@ public class NsdServiceRegistration {
 
     String myServiceName = "SpotifyVoter";
     int myLocalPort;
-    private static final String TAG = "MyActivity";
-
-
+    private static final String TAG = "Service Registration";
 
     public void registerService(int port) {
         // Create the NsdServiceInfo object, and populate it.
@@ -54,7 +52,7 @@ public class NsdServiceRegistration {
                 // resolve a conflict, so update the name you initially requested
                 // with the name Android actually used.
                 myServiceName = NsdServiceInfo.getServiceName();
-                Log.d(TAG, "Registered " + "myServiceName");
+                Log.d(TAG, "Registered " + myServiceName);
             }
 
             @Override

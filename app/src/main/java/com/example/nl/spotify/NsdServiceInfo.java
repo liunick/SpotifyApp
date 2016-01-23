@@ -15,7 +15,7 @@ package com.example.nl.spotify;
         import java.util.Map;
 /**
  * A class representing service information for network service discovery
- * {@see NsdManager}
+ *
  */
 public final class NsdServiceInfo implements Parcelable {
     private static final String TAG = "NsdServiceInfo";

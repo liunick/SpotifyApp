@@ -6,6 +6,9 @@ import android.util.Log;
 /**
 * Created by anton on 1/23/16.
 */
+
+//Doesn't do shit
+
 public class NsdManager extends Object {
 
 

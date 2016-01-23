@@ -5,6 +5,9 @@ import android.net.nsd.*;
 /**
  * Created by anton on 1/23/16.
  */
+
+//Doesn't do shit
+
 public class RegistrationListenerClass implements NsdManager.RegistrationListener {
 
         @Override
