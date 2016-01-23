@@ -49,17 +49,18 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
         bMainLogout = (Button) findViewById(R.id.bMainLogout);
 
         bMainAddSong.setOnClickListener(this);
+        bMainOpenCon.setOnClickListener(this);
         bMainLogout.setOnClickListener(this);
 
         //auth.AuthRequest();
 
-        AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
-                AuthenticationResponse.Type.TOKEN,
-                REDIRECT_URI);
-        builder.setScopes(new String[]{"user-read-private", "user-library-modify", "streaming"});
-        AuthenticationRequest request = builder.build();
-
-        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+//        AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
+//                AuthenticationResponse.Type.TOKEN,
+//                REDIRECT_URI);
+//        builder.setScopes(new String[]{"user-read-private", "user-library-modify", "streaming"});
+//        AuthenticationRequest request = builder.build();
+//
+//        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
     }
 
     @Override
@@ -137,13 +138,24 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
             case R.id.bMainAddSong:
                 startActivity(new Intent(this, AddSong.class));
                 break;
+            case R.id.bMainOpenCon:
+                AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
+                        AuthenticationResponse.Type.TOKEN,
+                        REDIRECT_URI);
+                builder.setScopes(new String[]{"user-read-private", "user-library-modify", "streaming"});
+                AuthenticationRequest request = builder.build();
+                AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+                break;
             case R.id.bMainLogout:
                 mPlayer.logout();
                 AuthenticationClient.clearCookies(this); // Clears password so that the client realizes the user must login again
-                Intent restart = new Intent(this, MainActivity.class); // Restarts the app so that user ends up on login page
-                startActivity(restart);
+//                Intent restart = new Intent(this, MainActivity.class); // Restarts the app so that user ends up on login page
+//                startActivity(restart);
                 break;
         }
     }
 
+    public static void isPlaying() {
+        
+    }
 }
