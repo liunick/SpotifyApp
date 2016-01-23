@@ -143,16 +143,7 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
                 startActivity(new Intent(this, AddSong.class));
                 break;
             case R.id.bMainOpenCon:
-<<<<<<< HEAD
-                AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
-                        AuthenticationResponse.Type.TOKEN,
-                        REDIRECT_URI);
-                builder.setScopes(new String[]{"user-read-private", "user-library-modify", "streaming"});
-                AuthenticationRequest request = builder.build();
-                AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
-                startActivity(new Intent(this, OpenCon.class));
-=======
-                if (mPlayer==null) {
+                if (mPlayer==null) { // Tests to see whether user is logged in. If not, they're redirected to login page
                     AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                             AuthenticationResponse.Type.TOKEN,
                             REDIRECT_URI);
@@ -160,9 +151,7 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
                     AuthenticationRequest request = builder.build();
                     AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
                 }
-                if (mPlayer!=null)
-                    System.out.println("mPlayer is logged in: " + mPlayer.isLoggedIn());
->>>>>>> 8a290c2b46fdfd7d57d50e047f1146370d4d01ef
+                startActivity(new Intent(this, OpenCon.class));
                 break;
             case R.id.bMainLogout:
                 if (mPlayer != null) {

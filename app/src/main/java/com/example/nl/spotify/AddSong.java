@@ -83,7 +83,7 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        OpenCon.clickConnect(bAddToPlaylist);
+//        OpenCon.clickConnect(bAddToPlaylist);
         etAddSongSearch = (EditText) findViewById(R.id.etAddSongSearch);
         etAddSongResult1 = (EditText) findViewById(R.id.etAddSongResult1);
         etAddSongResult2 = (EditText) findViewById(R.id.etAddSongResult2);
