@@ -26,5 +26,5 @@
             android:label="@string/title_activity_add_song"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
