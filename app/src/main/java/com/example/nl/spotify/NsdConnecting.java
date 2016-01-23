@@ -13,7 +13,7 @@ import java.net.InetAddress;
  */
 public class NsdConnecting {
 
-    private static final String TAG = "Service Creator";
+    private static final String TAG = "Connection";
     NsdManager.DiscoveryListener myDiscoveryListener;
     NsdManager myNsdManager;
     NsdManager.ResolveListener myResolveListener;

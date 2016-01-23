@@ -10,7 +10,7 @@ import java.net.ServerSocket;
 /**
  * Created by anton on 1/23/16.
  */
-public class NsdServiceRegistration {
+public class NsdServiceRegistration extends NsdManager {
     Context context;
     NsdServiceInfo myNsdServiceInfo;
     NsdManager myNsdManager;
@@ -19,7 +19,7 @@ public class NsdServiceRegistration {
 
     String myServiceName = "SpotifyVoter";
     int myLocalPort;
-    private static final String TAG = "MyActivity";
+    private static final String TAG = "Service Registration";
 
 
 
@@ -54,7 +54,7 @@ public class NsdServiceRegistration {
                 // resolve a conflict, so update the name you initially requested
                 // with the name Android actually used.
                 myServiceName = NsdServiceInfo.getServiceName();
-                Log.d(TAG, "Registered " + "myServiceName");
+                Log.d(TAG, "Registered " + myServiceName);
             }
 
             @Override
