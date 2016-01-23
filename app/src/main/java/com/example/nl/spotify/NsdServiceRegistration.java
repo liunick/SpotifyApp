@@ -20,8 +20,11 @@ public class NsdServiceRegistration extends NsdManager {
     String myServiceName = "SpotifyVoter";
     int myLocalPort;
     private static final String TAG = "Service Registration";
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> da5f70d9da0f4f6e42e18fb10c13d55b42044765
 
     public void registerService(int port) {
         // Create the NsdServiceInfo object, and populate it.
