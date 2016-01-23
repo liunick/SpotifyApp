@@ -1,17 +1,12 @@
 package com.example.nl.spotify;
+
 import android.content.Context;
 import android.net.nsd.NsdServiceInfo;
 import android.net.nsd.NsdManager;
 import android.util.Log;
-/**
-* Created by anton on 1/23/16.
-*/
-
-//Doesn't do shit
-
-public class NsdManager extends Object {
 
 
+public class NsdHelp {
     Context mContext;
     NsdManager mNsdManager;
     NsdManager.ResolveListener mResolveListener;
@@ -23,7 +18,7 @@ public class NsdManager extends Object {
     NsdServiceInfo mService;
 
 
-    public NsdHelper(Context context) {
+    public NsdHelp(Context context) {
         mContext = context;
         mNsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
     }

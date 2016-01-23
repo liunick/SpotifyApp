@@ -10,7 +10,7 @@ import java.net.ServerSocket;
 /**
  * Created by anton on 1/23/16.
  */
-public class NsdServiceRegistration extends NsdManager {
+public class NsdServiceRegistration {
     Context context;
     NsdServiceInfo myNsdServiceInfo;
     NsdManager myNsdManager;
@@ -20,11 +20,6 @@ public class NsdServiceRegistration extends NsdManager {
     String myServiceName = "SpotifyVoter";
     int myLocalPort;
     private static final String TAG = "Service Registration";
-<<<<<<< HEAD
-
-
-=======
->>>>>>> da5f70d9da0f4f6e42e18fb10c13d55b42044765
 
     public void registerService(int port) {
         // Create the NsdServiceInfo object, and populate it.
