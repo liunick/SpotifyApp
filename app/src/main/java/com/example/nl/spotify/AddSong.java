@@ -5,13 +5,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.spotify.sdk.android.player.Player;
 import com.spotify.sdk.android.player.Spotify;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
+import kaaes.spotify.webapi.android.models.ArtistSimple;
 import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.TracksPager;
 import kaaes.spotify.webapi.android.SpotifyService;
@@ -47,6 +50,8 @@ import kaaes.spotify.webapi.android.models.TracksToRemoveWithPosition;
 import kaaes.spotify.webapi.android.models.UserPrivate;
 import kaaes.spotify.webapi.android.models.UserPublic;
 import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
@@ -102,11 +107,31 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
             }
         }
 
-        searchedTracks = searchTracks(q);
+
+        Player mPlayer;
+        //searchedTracks = searchTracks(q);
         SpotifyApi api = new SpotifyApi();
         SpotifyService spotify = api.getService();
+        spotify.searchTracks(q, new Callback<TracksPager>() {
+            @Override
+            public void success(TracksPager tracksPager, Response response) {
+                for (Track b : tracksPager.tracks.items) {
+                    String artists = "";
+                    for(ArtistSimple as : b.artists){
+                        artists += as.name + " ";
+                    }
+                    etAddSongResult.setText(b.name + " - " + artists);
 
-        searchedTracks = spotify.searchTracks(q);
+                }
+                searchedTracks = tracksPager;
+                Log.d("Track success", "nothing here");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Track failure", error.toString());
+            }
+        });
 
     }
 
@@ -114,8 +139,8 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.bAddSongSearch:
+
                 searchForTrack(etAddSongSearch.getText().toString());
-                etAddSongResult.setText(searchedTracks.describeContents());
                 break;
         }
     }

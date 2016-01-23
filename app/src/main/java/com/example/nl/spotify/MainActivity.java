@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
     public static final String CLIENT_ID = "a6bb6713adee499c94a26d64de4f7e23";
     public static final String REDIRECT_URI = "spotify://callback";
 
-    private Player mPlayer;
+    //public AuthHelper auth;
+
+    public static Player mPlayer;
     private Button bMainAddSong, bMainOpenCon, bMainLogout;
 
     private static final int REQUEST_CODE = 1337;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
         bMainLogout = (Button) findViewById(R.id.bMainLogout);
 
         bMainAddSong.setOnClickListener(this);
+
+        //auth.AuthRequest();
 
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
