@@ -19,7 +19,7 @@ public class NsdEverything {
 
     String myServiceName = "SpotifyVoter";
     int myLocalPort;
-    private static final String TAG = "MyActivity";
+    private static final String TAG = "Service Creator";
 
 
 
