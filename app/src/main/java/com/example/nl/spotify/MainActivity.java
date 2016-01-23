@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
     private Player mPlayer;
 
     private static final int REQUEST_CODE = 1337;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
