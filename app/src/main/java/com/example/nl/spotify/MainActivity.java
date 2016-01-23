@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
         bMainLogout = (Button) findViewById(R.id.bMainLogout);
 
         bMainAddSong.setOnClickListener(this);
+        bMainLogout.setOnClickListener(this);
 
         //auth.AuthRequest();
 
@@ -134,6 +135,11 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
             case R.id.bMainAddSong:
                 startActivity(new Intent(this, AddSong.class));
                 break;
+            case R.id.bMainLogout:
+                mPlayer.logout();
+                System.out.println("Player is logged in: " + mPlayer.isLoggedIn());
+                break;
         }
     }
+
 }
