@@ -7,7 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import kaaes.spotify.webapi.android.models.Track;
+import kaaes.spotify.webapi.android.models.TracksPager;
+import kaaes.spotify.webapi.android.SpotifyService;
+
 public class AddSong extends AppCompatActivity {
+
+    Track selectedTrack;
+    TracksPager searchedTracks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,24 @@ public class AddSong extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    protected void selectTrack(Track selection) {
+        selectedTrack = selection;
+    }
+
+    protected void searchForTrack(String input) {
+        input = input.trim();
+        String q = "";
+        for (int i=0;i<input.length();i++) {
+            if (input.substring(i, i+1) == " ") {
+                q += "+";
+            } else {
+                q += input.substring(i, i+1);
+            }
+        }
+
+        //searchedTracks = ;
     }
 
 }
