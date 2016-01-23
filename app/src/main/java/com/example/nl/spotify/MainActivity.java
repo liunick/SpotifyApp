@@ -1,6 +1,8 @@
 package com.example.nl.spotify;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.player.Config;
+import com.spotify.sdk.android.player.PlayerStateCallback;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Player;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
 
     public static Player mPlayer;
     private Button bMainAddSong, bMainOpenCon, bMainLogout;
+    private static boolean isPlaying;
 
     private static final int REQUEST_CODE = 1337;
 
@@ -139,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
                 startActivity(new Intent(this, AddSong.class));
                 break;
             case R.id.bMainOpenCon:
+<<<<<<< HEAD
                 AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                         AuthenticationResponse.Type.TOKEN,
                         REDIRECT_URI);
@@ -146,17 +151,37 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
                 AuthenticationRequest request = builder.build();
                 AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
                 startActivity(new Intent(this, OpenCon.class));
+=======
+                if (mPlayer==null) {
+                    AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
+                            AuthenticationResponse.Type.TOKEN,
+                            REDIRECT_URI);
+                    builder.setScopes(new String[]{"user-read-private", "user-library-modify", "streaming"});
+                    AuthenticationRequest request = builder.build();
+                    AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+                }
+                if (mPlayer!=null)
+                    System.out.println("mPlayer is logged in: " + mPlayer.isLoggedIn());
+>>>>>>> 8a290c2b46fdfd7d57d50e047f1146370d4d01ef
                 break;
             case R.id.bMainLogout:
-                mPlayer.logout();
+                if (mPlayer != null) {
+                    mPlayer.logout();
+                }
                 AuthenticationClient.clearCookies(this); // Clears password so that the client realizes the user must login again
-//                Intent restart = new Intent(this, MainActivity.class); // Restarts the app so that user ends up on login page
-//                startActivity(restart);
+                Intent restart = new Intent(this, MainActivity.class); // Restarts the app so that user ends up on login page
+                startActivity(restart);
                 break;
         }
     }
 
-    public static void isPlaying() {
-        
+    public static boolean isPlaying() {
+        mPlayer.getPlayerState(new PlayerStateCallback() {
+            @Override
+            public void onPlayerState(PlayerState playerState) {
+                isPlaying = playerState.playing;
+            }
+        });
+        return isPlaying;
     }
 }
