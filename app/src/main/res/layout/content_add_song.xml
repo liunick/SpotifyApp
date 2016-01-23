@@ -25,7 +25,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
-        android:id="@+id/etAddSongResult"
+        android:id="@+id/etAddSongResult1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:textIsSelectable="true"/>
+    <EditText
+        android:id="@+id/etAddSongResult2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:textIsSelectable="true"/>
+    <EditText
+        android:id="@+id/etAddSongResult3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:textIsSelectable="true"/>
+    <EditText
+        android:id="@+id/etAddSongResult4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:textIsSelectable="true"/>
+    <EditText
+        android:id="@+id/etAddSongResult5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:textIsSelectable="true"/>
+    <Button
+        android:id="@+id/bClearSearch"
+        android:text="Clear Results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/bAddToPlaylist"
+        android:text="Add to playlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

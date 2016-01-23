@@ -5,16 +5,22 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.spotify.sdk.android.player.Player;
 import com.spotify.sdk.android.player.Spotify;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
+import kaaes.spotify.webapi.android.models.ArtistSimple;
 import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.TracksPager;
 import kaaes.spotify.webapi.android.SpotifyService;
+
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import kaaes.spotify.webapi.android.annotations.DELETEWITHBODY;
@@ -47,6 +53,8 @@ import kaaes.spotify.webapi.android.models.TracksToRemoveWithPosition;
 import kaaes.spotify.webapi.android.models.UserPrivate;
 import kaaes.spotify.webapi.android.models.UserPublic;
 import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
@@ -60,8 +68,13 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
 
     Track selectedTrack;
     TracksPager searchedTracks;
-    EditText etAddSongSearch, etAddSongResult;
+    EditText etAddSongSearch, etAddSongResult1, etAddSongResult2, etAddSongResult3,
+    etAddSongResult4, etAddSongResult5;
     Button bAddSongSearch;
+    Button bAddToPlaylist;
+    Button bClearSearch;
+    int countArtist = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,20 +84,17 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
         setSupportActionBar(toolbar);
 
         etAddSongSearch = (EditText) findViewById(R.id.etAddSongSearch);
-        etAddSongResult = (EditText) findViewById(R.id.etAddSongResult);
+        etAddSongResult1 = (EditText) findViewById(R.id.etAddSongResult1);
+        etAddSongResult2 = (EditText) findViewById(R.id.etAddSongResult2);
+        etAddSongResult3 = (EditText) findViewById(R.id.etAddSongResult3);
+        etAddSongResult4 = (EditText) findViewById(R.id.etAddSongResult4);
+        etAddSongResult5 = (EditText) findViewById(R.id.etAddSongResult5);
         bAddSongSearch = (Button) findViewById(R.id.bAddSongSearch);
-
+        bAddToPlaylist = (Button) findViewById(R.id.bAddToPlaylist);
+        bClearSearch = (Button) findViewById(R.id.bClearSearch);
         bAddSongSearch.setOnClickListener(this);
+        bClearSearch.setOnClickListener(this);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     protected void selectTrack(Track selection) {
@@ -92,9 +102,9 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
     }
 
     protected void searchForTrack(String input) {
-        input = input.trim();
+        input = input.trim(); // Spotify API doesn't like whitespace
         String q = "";
-        for (int i=0;i<input.length();i++) {
+        for (int i=0;i<input.length();i++) { // Checks input and replaces all spaces with '+' so that Spotify will understand it
             if (input.substring(i, i+1) == " ") {
                 q += "+";
             } else {
@@ -102,12 +112,50 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
             }
         }
 
-        searchedTracks = searchTracks(q);
+
+        Player mPlayer;
+        //searchedTracks = searchTracks(q);
         SpotifyApi api = new SpotifyApi();
         SpotifyService spotify = api.getService();
+        spotify.searchTracks(q, new Callback<TracksPager>() {
+            @Override
+            public void success(TracksPager tracksPager, Response response) {
+                for (Track b : tracksPager.tracks.items) {
+                    List<ArtistSimple> artists = b.artists;
+                    String artistName = artists.get(0).name;
+                    switch (countArtist) {
+                        case 0:
+                            etAddSongResult1.setText(b.name + " - " + artistName);
+                            countArtist++;
+                            break;
+                        case 1:
+                            etAddSongResult2.setText(b.name + " - " + artistName);
+                            countArtist++;
+                            break;
+                        case 2:
+                            etAddSongResult3.setText(b.name + " - " + artistName);
+                            countArtist++;
+                            break;
+                        case 3:
+                            etAddSongResult4.setText(b.name + " - " + artistName);
+                            countArtist++;
+                            break;
+                        case 4:
+                            etAddSongResult5.setText(b.name + " - " + artistName);
+                            countArtist++;
+                            break;
+                    }
+                }
+                countArtist = 0;
+                searchedTracks = tracksPager;
+                Log.d("Track success", "nothing here");
+            }
 
-        searchedTracks = spotify.searchTracks(q);
-
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Track failure", error.toString());
+            }
+        });
     }
 
     @Override
@@ -115,7 +163,14 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
         switch(view.getId()) {
             case R.id.bAddSongSearch:
                 searchForTrack(etAddSongSearch.getText().toString());
-                etAddSongResult.setText(searchedTracks.describeContents());
+                break;
+
+            case R.id.bClearSearch:
+                etAddSongResult1.setText("");
+                etAddSongResult2.setText("");
+                etAddSongResult3.setText("");
+                etAddSongResult4.setText("");
+                etAddSongResult5.setText("");
                 break;
         }
     }

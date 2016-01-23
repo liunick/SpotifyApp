@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +31,9 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
     public static final String CLIENT_ID = "a6bb6713adee499c94a26d64de4f7e23";
     public static final String REDIRECT_URI = "spotify://callback";
 
-    private Player mPlayer;
+    //public AuthHelper auth;
+
+    public static Player mPlayer;
     private Button bMainAddSong, bMainOpenCon, bMainLogout;
 
     private static final int REQUEST_CODE = 1337;
@@ -46,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
         bMainLogout = (Button) findViewById(R.id.bMainLogout);
 
         bMainAddSong.setOnClickListener(this);
+        bMainLogout.setOnClickListener(this);
+
+        //auth.AuthRequest();
 
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
                 Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
+
                 Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
                     @Override
                     public void onInitialized(Player player) {
@@ -130,6 +137,13 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
             case R.id.bMainAddSong:
                 startActivity(new Intent(this, AddSong.class));
                 break;
+            case R.id.bMainLogout:
+                mPlayer.logout();
+                AuthenticationClient.clearCookies(this); // Clears password so that the client realizes the user must login again
+                Intent restart = new Intent(this, MainActivity.class); // Restarts the app so that user ends up on login page
+                startActivity(restart);
+                break;
         }
     }
+
 }
