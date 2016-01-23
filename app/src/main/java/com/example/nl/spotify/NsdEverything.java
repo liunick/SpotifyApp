@@ -1,40 +1,31 @@
 package com.example.nl.spotify;
-
 import android.content.Context;
+import android.net.nsd.NsdServiceInfo;
 import android.net.nsd.NsdManager;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import android.net.nsd.NsdServiceInfo;
 
 /**
  * Created by anton on 1/23/16.
  */
-public class CreateHost extends RegistrationListenerClass {
+public class NsdEverything {
+    Context context;
+    NsdServiceInfo myNsdServiceInfo;
+    NsdManager myNsdManager;
+    NsdManager.RegistrationListener myRegistrationListener;
+    ServerSocket myServerSocket;
 
-    int mLocalPort = 0;
-    NsdManager.RegistrationListener mRegistrationListener = new RegistrationListenerClass();
-    NsdServiceInfo serviceInfo = new NsdServiceInfo();
-    RegistrationListenerClass mNsdManager = Context.getSystemService(Context.NSD_SERVICE);
-    String mServiceName = "";
-
-
-
-    public void initializeServerSocket() throws IOException {
-        // Initialize a server socket on the next available port.
-        ServerSocket mServerSocket = new ServerSocket(0);
-
-        // Store the chosen port.
-        mLocalPort =  mServerSocket.getLocalPort();
+    String myServiceName = "SpotifyVoter";
+    int myLocalPort;
+    private static final String TAG = "MyActivity";
 
 
-
-
-    }
 
     public void registerService(int port) {
         // Create the NsdServiceInfo object, and populate it.
-        //NsdServiceInfo serviceInfo  = new NsdServiceInfo();
+        NsdServiceInfo serviceInfo  = new NsdServiceInfo();
 
         // The name is subject to change based on conflicts
         // with other services advertised on the same network.
@@ -42,37 +33,47 @@ public class CreateHost extends RegistrationListenerClass {
         serviceInfo.setServiceType("_http._tcp.");
         serviceInfo.setPort(port);
 
-        mNsdManager.registerService(
-                serviceInfo, NsdManager.PROTOCOL_DNS_SD, mRegistrationListener);
+        myNsdManager.registerService(myNsdServiceInfo, NsdManager.PROTOCOL_DNS_SD, myRegistrationListener);
     }
 
+    public void initializeServerSocket() throws IOException {
+        // Initialize a server socket on the next available port.
+        myServerSocket = new ServerSocket(0);
 
+        // Store the chosen port.
+        myLocalPort = myServerSocket.getLocalPort();
+
+    }
 
     public void initializeRegistrationListener() {
-        mRegistrationListener = new NsdManager.RegistrationListener() {
+        myRegistrationListener = new NsdManager.RegistrationListener() {
 
             @Override
             public void onServiceRegistered(NsdServiceInfo NsdServiceInfo) {
                 // Save the service name.  Android may have changed it in order to
                 // resolve a conflict, so update the name you initially requested
                 // with the name Android actually used.
-                mServiceName = NsdServiceInfo.getServiceName();
+                myServiceName = NsdServiceInfo.getServiceName();
+                Log.d(TAG, "Registered " + "myServiceName");
             }
 
             @Override
             public void onRegistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
                 // Registration failed!  Put debugging code here to determine why.
+                Log.d(TAG, "Registration FAILED " + errorCode);
             }
 
             @Override
             public void onServiceUnregistered(NsdServiceInfo arg0) {
                 // Service has been unregistered.  This only happens when you call
                 // NsdManager.unregisterService() and pass in this listener.
+                Log.d(TAG, "Unregistered " + arg0);
             }
 
             @Override
             public void onUnregistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
                 // Unregistration failed.  Put debugging code here to determine why.
+                Log.d(TAG,"Unregistration FAILED " + errorCode);
             }
         };
     }
