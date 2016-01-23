@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements PlayerNotificatio
                 builder.setScopes(new String[]{"user-read-private", "user-library-modify", "streaming"});
                 AuthenticationRequest request = builder.build();
                 AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+                startActivity(new Intent(this, OpenCon.class));
                 break;
             case R.id.bMainLogout:
                 mPlayer.logout();

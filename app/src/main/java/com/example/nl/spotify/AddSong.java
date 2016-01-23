@@ -74,7 +74,7 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
     Button bAddToPlaylist;
     Button bClearSearch;
     int countArtist = 0;
-
+    static boolean firstT, secondT, thirdT, fourthT, fifthT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +83,7 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        OpenCon.clickConnect(bAddToPlaylist);
         etAddSongSearch = (EditText) findViewById(R.id.etAddSongSearch);
         etAddSongResult1 = (EditText) findViewById(R.id.etAddSongResult1);
         etAddSongResult2 = (EditText) findViewById(R.id.etAddSongResult2);
@@ -164,7 +165,17 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
             case R.id.bAddSongSearch:
                 searchForTrack(etAddSongSearch.getText().toString());
                 break;
-
+            case R.id.bAddToPlaylist:
+                firstT = etAddSongResult1.isSelected();
+                secondT = etAddSongResult1.isSelected();
+                thirdT = etAddSongResult1.isSelected();
+                fourthT = etAddSongResult1.isSelected();
+                fifthT = etAddSongResult1.isSelected();
+                etAddSongResult1.setText("");
+                etAddSongResult2.setText("");
+                etAddSongResult3.setText("");
+                etAddSongResult4.setText("");
+                etAddSongResult5.setText("");
             case R.id.bClearSearch:
                 etAddSongResult1.setText("");
                 etAddSongResult2.setText("");
