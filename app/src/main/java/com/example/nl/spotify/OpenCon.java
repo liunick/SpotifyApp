@@ -42,7 +42,7 @@ public class OpenCon extends AppCompatActivity {
             }
         };
 
-    }
+    };
     public void clickAdvertise(View v) {
         // Register service
         if(mConnection.getLocalPort() > -1) {
