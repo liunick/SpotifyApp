@@ -73,11 +73,14 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
     Button bAddSongSearch;
     Button bAddToPlaylist;
     Button bClearSearch;
-    int countArtist = 0;
+    Button bNextSongs;
+    Button bPrevSongs;
+    int songNum = 0;
     static boolean firstT, secondT, thirdT, fourthT, fifthT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        songNum = 0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_song);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,6 +98,8 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
         bClearSearch = (Button) findViewById(R.id.bClearSearch);
         bAddSongSearch.setOnClickListener(this);
         bClearSearch.setOnClickListener(this);
+        bNextSongs = (Button) findViewById(R.id.bNextSongs);
+        bPrevSongs = (Button) findViewById(R.id.bPrevSongs);
 
     }
 
@@ -121,33 +126,30 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
         spotify.searchTracks(q, new Callback<TracksPager>() {
             @Override
             public void success(TracksPager tracksPager, Response response) {
-                for (Track b : tracksPager.tracks.items) {
+                for (int i = 0; i < 5; i++) {
+                    System.out.println(songNum);
+                    System.out.println(i + songNum);
+                    Track b = tracksPager.tracks.items.get(i + songNum);
                     List<ArtistSimple> artists = b.artists;
                     String artistName = artists.get(0).name;
-                    switch (countArtist) {
+                    switch (i) {
                         case 0:
                             etAddSongResult1.setText(b.name + " - " + artistName);
-                            countArtist++;
                             break;
                         case 1:
                             etAddSongResult2.setText(b.name + " - " + artistName);
-                            countArtist++;
                             break;
                         case 2:
                             etAddSongResult3.setText(b.name + " - " + artistName);
-                            countArtist++;
                             break;
                         case 3:
                             etAddSongResult4.setText(b.name + " - " + artistName);
-                            countArtist++;
                             break;
                         case 4:
                             etAddSongResult5.setText(b.name + " - " + artistName);
-                            countArtist++;
                             break;
                     }
                 }
-                countArtist = 0;
                 searchedTracks = tracksPager;
                 Log.d("Track success", "nothing here");
             }
@@ -176,12 +178,22 @@ public class AddSong extends AppCompatActivity implements SpotifyService, View.O
                 etAddSongResult3.setText("");
                 etAddSongResult4.setText("");
                 etAddSongResult5.setText("");
+                break;
             case R.id.bClearSearch:
                 etAddSongResult1.setText("");
                 etAddSongResult2.setText("");
                 etAddSongResult3.setText("");
                 etAddSongResult4.setText("");
                 etAddSongResult5.setText("");
+                break;
+            case R.id.bNextSongs:
+                songNum += 5;
+                searchForTrack(etAddSongSearch.getText().toString());
+                break;
+            case R.id.bPrevSongs:
+                songNum -=5;
+                if (songNum <= 0) songNum = 0;
+                searchForTrack(etAddSongSearch.getText().toString());
                 break;
         }
     }

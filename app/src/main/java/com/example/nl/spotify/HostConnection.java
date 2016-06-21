@@ -255,6 +255,7 @@ public class HostConnection {
                                 new OutputStreamWriter(getSocket().getOutputStream())), true);
                 out.println(song);
                 out.flush();
+                out.close();
                 updateSongs(song, true);
             } catch (UnknownHostException e) {
                 Log.d(CLIENT_TAG, "Unknown Host", e);
